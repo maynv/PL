@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" >
     <div class="card-header">
         {{title}}
     </div>
@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-1"> Search</div>
             <div class="col-md-1">
-                <input type="text" name="" id="" placeholder="searching..."
+                <input type="text" name="" id="" placeholder=" Searching..."
                        [(ngModel)]='listFilter' >
             </div>
         </div>
@@ -15,7 +15,7 @@
                 <h6> Filtered by {{listFilter}}</h6>
             </div>
         </div>
-        <div class="table-responsive">
+        <div class="table-responsive" style="max-height: 500px">
             <table  class="table"
                     *ngIf = 'products && products.length' >
                 <thead>
@@ -30,37 +30,50 @@
                         <td> Code </td>
                         <td> Available </td>
                         <td> Price </td>
-                        <td> Rating</td>
+                        <td style="padding-left:50px "> Rating</td>
                         <td> Delete</td>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let x of filteredProducts">
-                        <td>
+                    <tr *ngFor="let x of filteredProducts"  >
+                        <td *ngIf='x'>
                             <img 
                                  *ngIf ='__showImage'
-                                 src="images/{{x.productImageUrl}}" alt="image"
+                                 src="images/{{x.imageUrl}}" alt="image"
                                  [title]="x.productName"
                                  [style.width.px]='imageWidth'
                                  [style.margin.px]="imageMargin">
                         </td>
-                        <td>{{ x.productName }}</td>
-                        <td>{{ x.productCode |convertToSpace:' ' }}</td>
-                        <td>{{ x.releaseDate | date}}</td>
-                        <td>{{ x.productPrice | currency : '$' : symbol : '1.2-2'}}</td>
-                        <td>{{ x.productRating}}</td>
-                        <td>
+                        <td style="color: dodgerblue ; text-align:  left" *ngIf='x'>
+                            <a [routerLink] = "['/products' , x.productId ]">
+                                    <strong>{{ x.productName }}</strong>
+                            </a>
+                        </td>
+                        <td *ngIf='x'>{{ x.productCode |convertToSpace:' ' }}</td>
+                        <td *ngIf='x'>{{ x.releaseDate | date}}</td>
+                        <td *ngIf='x'>{{ x.price | currency : '$' : symbol : '1.2-2'}}</td>
+                        <td *ngIf='x' style="margin-left: 15px">
+                            <!-- using nested components -->
+                            <div style="margin-left: 35px">
+                           
+                                <pm-star [rating]='x.starRating'
+                                         [price]='x.price'
+                                         (ratingClicked)='onRatingClicked($event)'>
+                                </pm-star>
+                            </div>
+                        </td>
+                        <td *ngIf='x' >
                             <button type="button" class="btn btn-primary btn-sm" 
-                                    (click)='productDelete'>
+                                    (click)='productDelete(x)'>
                                 <span class="glyphicon glyphicon-trash">Trash</span> 
                             </button>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <div >
-                <button class="row-sm-22" class="btn btn-primary"> Add</button>
-            </div>
         </div>
+        <div style="text-align: center ; margin-top: 20px" >
+                <button class="row-sm-22"  type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"> Add</button>
+            </div>
     </div>
 </div>

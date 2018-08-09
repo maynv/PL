@@ -1,24 +1,30 @@
 import { Component, OnInit} from "../../../node_modules/@angular/core";
-import { Iproduct } from 'src/app/product/Iproduct';
+import { Iproduct } from './product-interface/Iproduct';
+import { ProductService } from "../../services/product.service";
 
 @Component({
-    selector : "pm-products",
+    // selector : "pm-products",
     templateUrl : "./product-list.component.html",
-    styleUrls : ["./product-list.component.css" ],
+    styleUrls : ["./product-styles/product-list.component.css" ],
+
+
 })
 
 export class ProductListComponent implements OnInit{
-    /* constructor */
-
     /* flags */
-    __showImage : boolean = false;
+    __showImage : boolean = true;
     /* properties */
     title : string="Product list";
     imageWidth : number=50;
     imageMargin : number=2;
     _listFilters : string;
     currency :"$";
-    
+    filteredProducts : Iproduct[];
+    products : Iproduct[];
+    errorMessage : string ;
+    onRatingClicked(message:string) : void {
+        this.title= "Product" +" " + message ;
+    }
     
     get listFilter() : string {
         return this._listFilters;
@@ -28,38 +34,23 @@ export class ProductListComponent implements OnInit{
         this._listFilters=value;
         this.filteredProducts=this.listFilter ? this.performFilter(this.listFilter) : this.products;
     }
-    filteredProducts : Iproduct[];
-    products : Iproduct[]=[
-        {
-            "productId" : 2,
-            "productName" : "Garden Cart",
-            "productCode" : "SOJ-013",
-            "releaseDate" : "March 18, 2017",
-            "productDescription" : " 20% Hight perfoment better than older version.",
-            "productPrice" : 32.99,
-            "productRating" : 4.3,
-            "productImageUrl" :"gardenCart.png"
-        },
-        {
-            "productId" : 3,
-            "productName" : "Hammer",
-            "productCode" : "SOJ-023",
-            "releaseDate" : "March 18, 2017",
-            "productDescription" : " 20% Hight perfoment better than older version.",
-            "productPrice" : 3.99,
-            "productRating" : 4.2,
-            "productImageUrl" :"hammer.png"
-        }
-    ];
+
 
     /*  Methods */
-    constructor(){
+    constructor(private productService : ProductService){
         this.filteredProducts =this.products ;
         this.listFilter ='';
     }
 
     ngOnInit() : void{
-
+        this.productService.getProducts().subscribe(
+            products => {
+                this.products = products , 
+                this.filteredProducts = this.products;
+            },
+            error => this.errorMessage = <any>error 
+        );
+       
     }
 
     toogleImage() : void{
@@ -67,8 +58,10 @@ export class ProductListComponent implements OnInit{
 
     }
 
-    productDelete(): void{
-
+    productDelete(product): void{
+      this.filteredProducts=(this.filteredProducts.filter( x => x.productId !== product.productId ));
+       console.log(this.products);
+        // delete this.filteredProducts[product] ;
     }
 
     performFilter(filterBy: string): Iproduct[]{

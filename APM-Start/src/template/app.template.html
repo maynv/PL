@@ -1,4 +1,25 @@
-<div style="text-align: center ">   
-    <h2>{{pageTitle}}</h2>
-    <pm-products></pm-products>
+<div>
+    Header
 </div>
+<div style="background-color: deepskyblue">
+    <nav class="navbar navbar-expand navbar-light bg-light">
+        <div class="row">  
+            <p href="" class="navbar-brand">{{pageTitle}}</p>
+            <ul class="nav nav-pills" style="margin-left: 15px">
+                <li class="col">
+                    <div class="row">
+                        <a  class="nav-link" [routerLink]="['/welcome']">Home</a>
+                    </div>
+                </li>
+                <li><a  class="nav-link" [routerLink]="['/products']">Product List</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div class="container" class="">
+    <router-outlet></router-outlet>
+</div>
+<div class="footer">
+    <footer></footer>
+</div>
+

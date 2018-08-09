@@ -1,5 +1,5 @@
 import { Component } from "../../node_modules/@angular/core";
-import { ProductListComponent } from "../../src/app/product/product-list.component";
+
 /* define component decorator */
 @Component ({
   selector :'pm-root',
@@ -7,5 +7,5 @@ import { ProductListComponent } from "../../src/app/product/product-list.compone
 })
 /* define app component */
 export class AppComponent {
-  pageTitle : String = ' View Product ';
+  pageTitle : string = ' Product Management ';
 }
