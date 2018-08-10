@@ -1,8 +1,9 @@
-import { Injectable } from "../../node_modules/@angular/core";
-import { Iproduct } from "../app/product/product-interface/Iproduct";
+import { Injectable } from "@angular/core";
+
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError , tap, map } from 'rxjs/operators'
+import { Iproduct } from "../app/productMaterials/product-interface/Iproduct";
  
 @Injectable({
     providedIn : 'root',
@@ -10,9 +11,15 @@ import { catchError , tap, map } from 'rxjs/operators'
 })
 
 export class ProductService{
-
     private productUrl = './api/products/products.json';
-
+    private   setHeaders() : any {
+      const headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      };
+  
+      return headers;
+    }
     /* handlerError */
     private handleError (err : HttpErrorResponse ){
        let errorMessage = '';
@@ -31,18 +38,27 @@ export class ProductService{
 
     }
     /* get all products from server buy using HTTP request */ 
-    getProducts(): Observable<Iproduct[]> {
+    getAllProducts(): Observable<Iproduct[]> {
       return this.http.get<Iproduct[]>(this.productUrl).pipe(
-        tap(data => ('All: ' + JSON.stringify(data))),
         catchError(this.handleError)
       );
     }
+
     /* get a product buy id */
+    
     getProduct(id: number): Observable<Iproduct | undefined> {
-      return this.getProducts().pipe(
+      return this.getAllProducts().pipe(
         map((products: Iproduct[]) => products.find(p => p.productId === id))
       );
     }
+
+    setAllProducts(products: Iproduct[]):  Observable<any>{
+      //console.log(  JSON.stringify(products));
+      return this.http.post<any> (this.productUrl, JSON.stringify(products), this.setHeaders()).pipe(
+        catchError(this.handleError)
+      );
+    }
+
     deleteProduct( product : Iproduct ){
       console.log(product.productName);
     }

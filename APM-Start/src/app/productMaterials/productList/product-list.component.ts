@@ -1,11 +1,11 @@
-import { Component, OnInit} from "../../../node_modules/@angular/core";
-import { Iproduct } from './product-interface/Iproduct';
-import { ProductService } from "../../services/product.service";
+import { Component, OnInit} from "@angular/core";
+import { Iproduct } from '../product-interface/IProduct';
+import { ProductService } from "../../../services/product.service";
 
 @Component({
     // selector : "pm-products",
     templateUrl : "./product-list.component.html",
-    styleUrls : ["./product-styles/product-list.component.css" ],
+    styleUrls : ["./product-list.component.css" ],
 
 
 })
@@ -43,7 +43,7 @@ export class ProductListComponent implements OnInit{
     }
 
     ngOnInit() : void{
-        this.productService.getProducts().subscribe(
+        this.productService.getAllProducts().subscribe(
             products => {
                 this.products = products , 
                 this.filteredProducts = this.products;
@@ -60,7 +60,9 @@ export class ProductListComponent implements OnInit{
 
     productDelete(product): void{
       this.filteredProducts=(this.filteredProducts.filter( x => x.productId !== product.productId ));
-       console.log(this.products);
+      this.products=(this.products.filter( x => x.productId !== product.productId ));
+      this.productService.setAllProducts(this.products).subscribe();
+        // console.log(this.products);
         // delete this.filteredProducts[product] ;
     }
 

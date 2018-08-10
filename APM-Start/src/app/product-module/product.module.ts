@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { ProductListComponent } from '../product/product-list.component';
-import { ProductDetailComponent } from '../product/product-detail.component';
-import { RouterModule } from '../../../node_modules/@angular/router';
-import { ProductDetailGuard } from '../product/product-guard/product-detail.guard';
+import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared-module/shared.module';
+import { ProductListComponent } from '../productMaterials/productList/product-list.component';
+import { ProductDetailGuard } from '../productMaterials/product-guard/product-detail.guard';
+import { ProductDetailComponent } from '../productMaterials/productDetail/product-detail.component';
 
 @NgModule({
   imports: [

@@ -6,6 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { WelcomeComponent } from './home/welcome.component';
 import { RouterModule } from  '@angular/router';
 import { ProductModule } from './product-module/product.module';
+//import { MatDialog } from '@angular/material';
+
 
 @NgModule({
   declarations: [
@@ -15,7 +17,7 @@ import { ProductModule } from './product-module/product.module';
   imports: [
     /* All App component need this Modules */
     BrowserModule,
-    FormsModule,
+    FormsModule, // use ngIf and ngFor
     HttpClientModule,
     RouterModule.forRoot([
       { path : 'welcome', component : WelcomeComponent },
@@ -23,6 +25,7 @@ import { ProductModule } from './product-module/product.module';
       { path : '**', redirectTo : 'welcome' , pathMatch : 'full' }
     ]),
     ProductModule,
+   // MatDialog,
   ],
   bootstrap: [
       AppComponent  
