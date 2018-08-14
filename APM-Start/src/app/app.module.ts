@@ -6,13 +6,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { WelcomeComponent } from './home/welcome.component';
 import { RouterModule } from  '@angular/router';
 import { ProductModule } from './product-module/product.module';
+
+
+
+
 //import { MatDialog } from '@angular/material';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    WelcomeComponent
+    WelcomeComponent,
   ],
   imports: [
     /* All App component need this Modules */

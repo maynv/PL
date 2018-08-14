@@ -1,4 +1,4 @@
-import { Component, OnChanges,EventEmitter , Input, Output } from "../../../node_modules/@angular/core";
+import { Component, OnChanges,EventEmitter , Input, Output } from "@angular/core";
 
 
 @Component({

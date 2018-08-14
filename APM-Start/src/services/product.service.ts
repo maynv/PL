@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse , HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError , tap, map } from 'rxjs/operators'
 import { Iproduct } from "../app/productMaterials/product-interface/Iproduct";
@@ -11,7 +11,13 @@ import { Iproduct } from "../app/productMaterials/product-interface/Iproduct";
 })
 
 export class ProductService{
-    private productUrl = './api/products/products.json';
+    private _productUrl = './api/products/products.json';
+  public get productUrl() {
+    return this._productUrl;
+  }
+  public set productUrl(value) {
+    this._productUrl = value;
+  }
     private   setHeaders() : any {
       const headers = {
         'Content-Type': 'application/json',
@@ -63,4 +69,12 @@ export class ProductService{
       console.log(product.productName);
     }
 
+    checkProduct (product : Iproduct ): boolean {
+      if( product.productName && product.productCode && product.price ){
+        return  true; 
+      }
+      else {
+        return false ;
+      }
+    }
 }

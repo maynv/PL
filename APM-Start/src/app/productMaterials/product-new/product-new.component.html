@@ -1,0 +1,51 @@
+<div >
+  <div class="input-group mb-3" >
+      <div class="col-sm-3">
+          <p> Product Name </p>
+      </div>
+      <div class="col-sm-9">
+          <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" 
+            [(ngModel)]='childnewProduct.productName'>
+      </div>
+  </div>
+  <div class="input-group mb-3">
+      <div class="col-sm-3">
+          <p> Product Code </p>
+      </div>
+      <div class="col-sm-9">
+          <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1"
+          [(ngModel)]="childnewProduct.productCode">
+      </div>
+  </div>
+  <div class="input-group mb-3">
+      <div class="col-sm-3">
+          <p> Release Date</p>
+      </div>
+      <div class="col-sm-9">
+          <input type="date" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1"
+          [(ngModel)]="childnewProduct.releaseDate">
+      </div>
+  </div>
+  <div class="input-group mb-3">
+    <div class="col-sm-3">
+      <p> Description </p>
+    </div>
+    <div style="padding-left: 10pt" class="col-sm-9">
+      <textarea name="" id="" cols="75" rows="3"
+      [(ngModel)]="childnewProduct.description"></textarea>
+    </div>
+  </div>
+  <div class="input-group mb-3"> 
+    <div class="col-sm-3">
+        <p> Product Price </p>
+    </div>
+    <div class="col-sm-9">
+        <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1"
+        [(ngModel)]="childnewProduct.price">
+    </div>
+  </div>
+  <div>
+     <button type="button" class="btn btn-primary" data-dismiss="modal" 
+        (click)="commitNewProduct(childnewProduct)"></button>Add
+  </div>
+</div>

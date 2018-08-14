@@ -1,4 +1,4 @@
-<div>
+<!-- <div>
     Header
 </div>
 <div style="background-color: deepskyblue">
@@ -16,10 +16,46 @@
         </div>
     </nav>
 </div>
-<div class="container" class="">
+<div class="container-fluid">
     <router-outlet></router-outlet>
 </div>
 <div class="footer">
     <footer></footer>
-</div>
+</div> -->
 
+<body class="app sidebar-show aside-menu-hidden header-fixed ">
+    <header class="app-header navbar">
+        <div>
+            <nav style="margin-left: 20px" >
+                <div class="row">  
+                    <p href="" class="navbar-brand">{{pageTitle}}</p>
+                    <ul class="nav nav-pills" style="margin-left: 15px">
+                        <li class="col">
+                            <div class="row">
+                                <a  class="nav-link" [routerLink]="['/welcome']">Home</a>
+                            </div>
+                        </li>
+                        <li><a  class="nav-link" [routerLink]="['/products']">Product List</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <div class="app-body">
+      <div class="sidebar">
+        <!-- Sidebar content here -->
+      </div>
+      <main class="main">
+        <!-- Main content here -->
+        <div class="container-fluid">
+            <router-outlet></router-outlet>
+        </div>
+      </main>
+      <aside class="aside-menu">
+        <!-- Aside menu content here -->
+      </aside>
+    </div>
+    <footer class="app-footer">
+      <!-- Footer content here -->
+    </footer>
+  </body>

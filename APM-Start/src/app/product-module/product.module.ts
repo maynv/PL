@@ -4,6 +4,8 @@ import { SharedModule } from '../shared-module/shared.module';
 import { ProductListComponent } from '../productMaterials/productList/product-list.component';
 import { ProductDetailGuard } from '../productMaterials/product-guard/product-detail.guard';
 import { ProductDetailComponent } from '../productMaterials/productDetail/product-detail.component';
+import { ProductNewComponent } from '../productMaterials/product-new/product-new.component';
+
 
 @NgModule({
   imports: [
@@ -20,6 +22,7 @@ import { ProductDetailComponent } from '../productMaterials/productDetail/produc
   declarations: [
     ProductListComponent,
     ProductDetailComponent,
+    ProductNewComponent
   ]
 })
 export class ProductModule { }
