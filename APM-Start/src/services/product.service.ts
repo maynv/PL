@@ -1,9 +1,11 @@
 import { Injectable } from "@angular/core";
 
 import { HttpClient, HttpErrorResponse , HttpHeaders } from '@angular/common/http';
+import {RequestOptions } from '@angular/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError , tap, map } from 'rxjs/operators'
-import { Iproduct } from "../app/productMaterials/product-interface/Iproduct";
+import { catchError , tap , map } from 'rxjs/operators'
+import { Iproduct } from "../app/product-module/productMaterials/product-interface/Iproduct";
+
  
 @Injectable({
     providedIn : 'root',
@@ -12,20 +14,25 @@ import { Iproduct } from "../app/productMaterials/product-interface/Iproduct";
 
 export class ProductService{
     private _productUrl = './api/products/products.json';
-  public get productUrl() {
-    return this._productUrl;
-  }
+    // private _productUrl = "http://localhost:3004/api/todo"; 
+    public get productUrl() {
+      return this._productUrl;
+    }
   public set productUrl(value) {
     this._productUrl = value;
+
   }
-    private   setHeaders() : any {
-      const headers = {
+    private setHeaders() : any {
+      const headers =  new HttpHeaders ({
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      };
+        'Accept': 'application/json',
+        // 'Access-Control-Allow-Headers': 'Content-Type',
+        // 'Mode': 'Cors'
+      });
   
       return headers;
     }
+    private header = this.setHeaders();
     /* handlerError */
     private handleError (err : HttpErrorResponse ){
        let errorMessage = '';
@@ -44,8 +51,16 @@ export class ProductService{
 
     }
     /* get all products from server buy using HTTP request */ 
-    getAllProducts(): Observable<Iproduct[]> {
-      return this.http.get<Iproduct[]>(this.productUrl).pipe(
+    getAllProducts(): Observable <Iproduct[]>{
+      const httpOptions = {
+        headers: new HttpHeaders({ 
+          // 'Content-Type': 'application/json',
+          //'Access-Control-Allow-Origin' : '*',
+          
+        })
+      };
+      return this.http.get <Iproduct[]> (this.productUrl).pipe(
+        
         catchError(this.handleError)
       );
     }
@@ -54,7 +69,7 @@ export class ProductService{
     
     getProduct(id: number): Observable<Iproduct | undefined> {
       return this.getAllProducts().pipe(
-        map((products: Iproduct[]) => products.find(p => p.productId === id))
+        map((products: Iproduct[]) => products.find( p => p.productId === id))
       );
     }
 

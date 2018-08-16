@@ -1,5 +1,5 @@
 import { Component, OnInit , Input, OnChanges  ,  EventEmitter , Output } from '@angular/core';
-import { Iproduct } from '../product-interface/IProduct';
+import { Iproduct } from '../product-interface/Iproduct';
 
 
 @Component({

@@ -1,14 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AppComponent } from "./app.component";
 import { HttpClientModule } from '@angular/common/http';
-import { WelcomeComponent } from './home/welcome.component';
+import { WelcomeComponent } from './homemodule/welcomecomponent/welcome.component';
 import { RouterModule } from  '@angular/router';
 import { ProductModule } from './product-module/product.module';
-
-
-
+import { AppComponent } from './appcomponent/app.component'
+import { HomeModule } from './homemodule/home.module';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
 
 //import { MatDialog } from '@angular/material';
 
@@ -17,6 +17,8 @@ import { ProductModule } from './product-module/product.module';
   declarations: [
     AppComponent,
     WelcomeComponent,
+    HeaderComponent,
+    FooterComponent,
   ],
   imports: [
     /* All App component need this Modules */
@@ -24,15 +26,18 @@ import { ProductModule } from './product-module/product.module';
     FormsModule, // use ngIf and ngFor
     HttpClientModule,
     RouterModule.forRoot([
-      { path : 'welcome', component : WelcomeComponent },
-      { path : '' , redirectTo: 'welcome' , pathMatch : 'full'},
-      { path : '**', redirectTo : 'welcome' , pathMatch : 'full' }
+      { path : 'home', component : HomeModule },
+      { path : '' , redirectTo: 'home' , pathMatch : 'full'},
+      { path : '**', redirectTo : 'home' , pathMatch : 'full' }
     ]),
     ProductModule,
+    HomeModule
    // MatDialog,
   ],
   bootstrap: [
       AppComponent  
   ]
 })
-export class AppModule { }
+export class AppModule {
+  
+}

@@ -1,0 +1,38 @@
+
+<body class="app   sidebar-show  aside-menu-hidden header-fixed ">
+  <header class="app-header navbar" style="text-align: center">
+        <pm-header></pm-header>
+  </header>
+  <div class="app-body">
+      <div class="sidebar" style="width: 240px" >
+          <!-- Sidebar content here -->
+          <div>
+              <nav style="" >
+                  <div class="col">  
+                      <p href="" class="navbar-brand">{{pageTitle}}</p>
+                      <ul class="nav nav-pills" style="margin-left: 15px">
+                          <li >
+                              <a  class="nav-link" [routerLink]="['/home']">Home</a>
+                          </li>
+                          <li ><a  class="nav-link" [routerLink]="['/products']">Product List</a></li>
+                      </ul>
+                  </div>
+              </nav>
+          </div>
+      </div>
+      <main class="main" >
+          <!-- Main content here -->
+          <div class="container-fluid" style=" width: 1200pt ;  scroll-snap-type-y:  auto;" >
+              <router-outlet></router-outlet>
+          </div>
+      </main>
+      <aside class="aside-menu">
+          <!-- Aside menu content here -->
+      </aside>
+  </div>
+  <footer class="app-footer" >
+    <pm-footer></pm-footer>
+    <!-- Footer content here -->
+  </footer>
+</body>
+

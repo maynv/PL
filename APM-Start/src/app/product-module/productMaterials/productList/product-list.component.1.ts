@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { Iproduct } from '../product-interface/IProduct';
-import { ProductService } from "../../../services/product.service";
-import { ProductNewComponent } from "../product-new/product-new.component"
+import { Iproduct } from '../product-interface/Iproduct'; 
+import * as MV from "../../../define/define"
+import { ProductService } from "../../../../services/product.service";
 @Component({
     // selector : "pm-products",
     templateUrl : "./product-list.component.html",
@@ -18,10 +18,10 @@ export class ProductListComponent implements OnInit{
     imageMargin : number=2;
     _listFilters : string;
     currency :"$";
-    filteredProducts = <Iproduct[]>{};
-    newProduct =  <Iproduct>{};
-    products = <Iproduct[]>{};
-    deleteProduct : Iproduct;
+    filteredProducts = MV.PRODUCT.PRODUCTFILTERED ;
+    newProduct =  <Iproduct>{} ;
+    products = MV.PRODUCT.LISTPRODUCT;
+    deleteProduct =  <Iproduct>{};
     errorMessage : string ;
     onRatingClicked(message:string) : void {
         this.title= "Product" +" " + message ;
@@ -33,25 +33,22 @@ export class ProductListComponent implements OnInit{
 
     set listFilter(value: string){
         this._listFilters = value;
-        this.filteredProducts = this.listFilter ? this.performFilter(this.listFilter) : this.products;
+        MV.PRODUCT.PRODUCTFILTERED = this.listFilter ? this.performFilter(this.listFilter) : MV.PRODUCT.LISTPRODUCT;
     }
 
 
     /*  Methods */
     constructor(private productService : ProductService  ){
-        this.filteredProducts =this.products ;
+        MV.PRODUCT.PRODUCTFILTERED =MV.PRODUCT.LISTPRODUCT ;
         this.listFilter ='';
     }
 
     ngOnInit() : void{
-        // console.log( JSON.parse(window.localStorage.getItem('product')));
-        // this.filteredProducts = this.products;
         this.productService.getAllProducts().subscribe(
             products => {
-                this.products = products , 
-                this.filteredProducts = this.products;
-               // console.log(typeof products[0].releaseDate);
-               // this.newProduct = products[0];
+                MV.PRODUCT.LISTPRODUCT = products , 
+                MV.PRODUCT.PRODUCTFILTERED = MV.PRODUCT.LISTPRODUCT;
+              //  console.log( "Got " + products)
             },
             error => this.errorMessage = <any>error 
         );
@@ -64,15 +61,16 @@ export class ProductListComponent implements OnInit{
     takeNewProduct(product : Iproduct ): void {
         if (this.productService.checkProduct(product) === true ){
             this.newProduct = product ;
+            product.productId = MV.PRODUCT.LISTPRODUCT.length +1 ;
             this.addNewProduct();
         }
     }
 
     addNewProduct(): void {
-        this.products.push(this.newProduct);
-        this.newProduct = <Iproduct> {} ;
-        console.log(this.newProduct);
+        MV.PRODUCT.LISTPRODUCT.push(this.newProduct);    
         this.updateListProduct();
+        this.newProduct = <Iproduct> {} ;
+        console.log(MV.PRODUCT.LISTPRODUCT);
     }
     
     addToDelete (product) : void {
@@ -81,27 +79,32 @@ export class ProductListComponent implements OnInit{
     }
     
     productDelete(product): void{
-        this.filteredProducts=(this.filteredProducts.filter( x => x.productId !== product.productId ));
-        this.products=(this.products.filter( x => x.productId !== product.productId ));
-        this.productService.setAllProducts(this.products).subscribe();
+        MV.PRODUCT.PRODUCTFILTERED=(MV.PRODUCT.PRODUCTFILTERED.filter( x => x.productId !== product.productId ));
+        MV.PRODUCT.LISTPRODUCT=(MV.PRODUCT.LISTPRODUCT.filter( x => x.productId !== product.productId ));
+        this.productService.setAllProducts(MV.PRODUCT.LISTPRODUCT).subscribe();
     }
 
     productDeleteList(): void{
-      this.filteredProducts=(this.filteredProducts.filter( x => x.productId !== this.deleteProduct.productId ));
-      this.products=(this.products.filter( x => x.productId !== this.deleteProduct.productId ));
-      this.productService.setAllProducts(this.products).subscribe();
+      MV.PRODUCT.PRODUCTFILTERED=(MV.PRODUCT.PRODUCTFILTERED.filter( x => x.productId !== this.deleteProduct.productId ));
+      MV.PRODUCT.LISTPRODUCT=(MV.PRODUCT.LISTPRODUCT.filter( x => x.productId !== this.deleteProduct.productId ));
+      this.productService.setAllProducts(MV.PRODUCT.LISTPRODUCT).subscribe();
         // console.log(this.products);
-        // delete this.filteredProducts[product] ;
+        // delete MV.PRODUCT.PRODUCTFILTERED[product] ;
     }
 
     performFilter(filterBy: string): Iproduct[]{
         filterBy=filterBy.toLocaleLowerCase();
-        return this.products.filter((product:Iproduct) => 
+        return MV.PRODUCT.LISTPRODUCT.filter((product:Iproduct) => 
                product.productName.toLocaleLowerCase().indexOf(filterBy) !== -1
             || product.productCode.toLocaleLowerCase().indexOf(filterBy) !== -1);
     }
     updateListProduct() : void {
-        this.filteredProducts = this.performFilter(this._listFilters) ;
+        if ( this._listFilters ){
+            MV.PRODUCT.PRODUCTFILTERED = this.performFilter(this._listFilters) ;
+        }else {
+            MV.PRODUCT.PRODUCTFILTERED = MV.PRODUCT.LISTPRODUCT ;
+        }
+      
         // if(this.products) {
         //     window.localStorage.setItem('product',JSON.stringify(this.products));
         // }

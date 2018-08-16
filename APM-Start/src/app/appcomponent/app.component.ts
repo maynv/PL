@@ -1,9 +1,8 @@
 import { Component } from "@angular/core";
-
 /* define component decorator */
 @Component ({
   selector :'pm-root',
-  templateUrl : "../template/app.template.html"
+  templateUrl : "./app.component.html"
 })
 /* define app component */
 export class AppComponent {

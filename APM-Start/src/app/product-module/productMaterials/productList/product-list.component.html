@@ -17,7 +17,7 @@
         </div>
         <div class="table-responsive table-hover" style="max-height: 500px">
             <table  class="table"
-                    *ngIf = 'products && products.length' >
+                    *ngIf = 'MV.products && MV.products.length' >
                 <thead>
                     <tr>
                         <td>
@@ -35,16 +35,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let x of filteredProducts"  >
+                    <tr *ngFor="let x of MV.filteredProducts"  >
                         <td *ngIf='x'>
                             <img 
                                  *ngIf ='__showImage'
                                  src="images/{{x.imageUrl}}" alt="image"
                                  [title]="x.productName"
-                                 [style.width.px]='imageWidth'
-                                 [style.margin.px]="imageMargin">
+                            >
                         </td>
-                        <td style="color: dodgerblue ; text-align:  left" *ngIf='x'>
+                        <td style="color: dodgerblue ; text-align:  left"  *ngIf='x'>
                             <a [routerLink] = "['/products' , x.productId ]">
                                     <strong>{{ x.productName }}</strong>
                             </a>
@@ -91,7 +90,7 @@
                     </div>
                     <div class="modal-body">
                         <pm-product-new
-                            [childnewProduct]= "newProduct"
+                            [childnewProduct]= "MV.newProduct"
                             (commitNew)="takeNewProduct($event)"
                         ></pm-product-new>
                     </div>
